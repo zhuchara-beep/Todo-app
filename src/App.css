@@ -1,0 +1,65 @@
+.App {
+  /*text-align: center;*/
+  margin: 30px;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  font-weight: bold;
+  font-size: 20px;
+  list-style-type: none;
+}
+
+.App-selected {
+  color: green;
+}
+
+.App-tasks {
+  margin-left: 10px;
+}
+
+.App-tasks-list {
+  border-left: 3px solid #4e4eff;
+  list-style-type: square;
+}
+
+.App-button {
+
+}
+
+.project-info {
+  margin-top: 5px;
+}
+
+.project-info span {
+  display: block;
+  margin-left: 10px;
+}
+
+.task-info {
+  padding-left: 15px;
+  padding-top: 0;
+  margin-top: 5px;
+}
+
+.task-info li {
+  margin: 0 0 5px 10px;
+}
+
+.task-info li span{
+  display: block;
+}
