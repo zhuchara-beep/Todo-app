@@ -1,36 +1,53 @@
-/*
-import fetchApi from './fetchApi';
-
-export async function getProjects() {
-    return await fetchApi('projects');
-}
-
-export async function getProject(id) {
-    return await fetchApi(`projects/${id}`);
-}*/
-
 import { db } from "../firebase"
 
-export async function getProjects() {
-    return await db
+/**
+ * Получить список проектов
+ */
+export function getProjects() {
+    return db
         .collection("projects")
-        //.orderBy("order", "asc")
+        .orderBy("order", "asc")
         .get()
         .then(querySnapshot =>
             querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }))
-        )
+        );
 }
 
-export async function getProject(id) {
-    return await db
+/**
+ * Получить данные по проекту
+ * @param {*} id
+ */
+export function getProject(id) {
+    return db
         .collection("projects")
         .doc(id)
         .get()
-        .then(doc => ({...doc.data(), id: doc.id}))
+        .then(doc => ({ ...doc.data(), id: doc.id }));
 }
 
+/**
+ * Добавить новый проект в конец списка
+ * @param {*} payload
+ */
 export async function addProject(payload) {
-    return await db.collection("projects").add({
-        name: payload.name
-    }).then(doc => getProject(doc.id));
+    const projectsRef = db.collection("projects");
+
+    const lastProject = await projectsRef
+        .orderBy("order", "desc")
+        .limit(1)
+        .get();
+    const order =
+        lastProject.docs.length > 0 ? lastProject.docs[0].data().order + 1 : 1;
+
+    const newProject = await projectsRef.add({ name: payload.name, order });
+
+    return { id: newProject.id, name: payload.name, order }
+}
+
+/**
+ * Удалить проект
+ * @param {*} id
+ */
+export function removeProject(id) {
+    return db.collection("projects").doc(id).delete()
 }
