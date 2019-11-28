@@ -1,6 +1,8 @@
-import React, { useEffect, useCallback } from "react"
+import React, {useEffect, useCallback} from "react"
 
-import { getTasksByProject, addTask } from "../api/tasks"
+import {getTasksByProject, addTask} from "../api/tasks"
+
+import {TaskForm} from "../components/TaskForm";
 
 function Tasks(props) {
     const [tasks, setTasks] = React.useState([]);
@@ -35,6 +37,7 @@ function Tasks(props) {
             ) : (
                 <div>Нет задач</div>
             )}
+            <TaskForm projectId={props.projectId} onTaskAdded={data => setTasks([...tasks, data])}/>
         </div>
     )
 }
